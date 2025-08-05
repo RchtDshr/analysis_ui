@@ -143,7 +143,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
             </div>
             
             <div className="flex items-center space-x-2 sm:space-x-4">
-              <Button variant="ghost" size="icon" className="relative">
+              <Button variant="outline" size="icon" className="relative">
                 <Bell className="h-4 w-4 sm:h-5 sm:w-5" />
                 <span className="absolute -top-1 -right-1 h-3 w-3 bg-destructive rounded-full text-[10px] text-destructive-foreground flex items-center justify-center">
                   3
@@ -154,8 +154,8 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
               
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                    <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center">
+                  <Button variant="outline" className="relative h-8 w-8 rounded-full">
+                    <div className="h-8 w-8 rounded-full flex items-center justify-center">
                       <span className="text-xs sm:text-sm font-medium text-primary-foreground">JD</span>
                     </div>
                   </Button>
