@@ -1,0 +1,123 @@
+import { useState, useEffect } from 'react'
+import { MetricsGrid } from '@/components/dashboard/MetricsGrid'
+import { RevenueChart, ChannelChart, DeviceChart } from '@/components/dashboard/Charts'
+import { CampaignsTable } from '@/components/dashboard/CampaignsTable'
+import { ActivityFeed } from '@/components/dashboard/ActivityFeed'
+import { 
+  keyMetrics, 
+  revenueData, 
+  channelData, 
+  deviceData, 
+  campaignData,
+  generateRandomMetric
+} from '@/data/mockData'
+
+export function DashboardOverview() {
+  const [metrics, setMetrics] = useState(keyMetrics)
+  const [isLoading, setIsLoading] = useState(true)
+
+  // Simulate loading and real-time updates
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false)
+    }, 1000)
+
+    // Simulate real-time metric updates
+    const interval = setInterval(() => {
+      setMetrics(prevMetrics => 
+        prevMetrics.map(metric => ({
+          ...metric,
+          value: metric.id === '1' 
+            ? `$${generateRandomMetric(284532).toLocaleString()}`
+            : metric.id === '2'
+            ? `${generateRandomMetric(18293).toLocaleString()}`
+            : metric.id === '3'
+            ? `${generateRandomMetric(2847).toLocaleString()}`
+            : `${generateRandomMetric(23.8, 0.05).toFixed(1)}%`,
+          change: generateRandomMetric(metric.change, 0.3)
+        }))
+      )
+    }, 10000) // Update every 10 seconds
+
+    return () => {
+      clearTimeout(timer)
+      clearInterval(interval)
+    }
+  }, [])
+
+  if (isLoading) {
+    return <DashboardSkeleton />
+  }
+
+  return (
+    <div className="space-y-6">
+      {/* Page Header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Dashboard Overview</h1>
+          <p className="text-muted-foreground">
+            Welcome back! Here's what's happening with your campaigns today.
+          </p>
+        </div>
+        <div className="flex items-center space-x-2">
+          <div className="text-sm text-muted-foreground">
+            Last updated: {new Date().toLocaleTimeString()}
+          </div>
+        </div>
+      </div>
+
+      {/* Key Metrics */}
+      <MetricsGrid metrics={metrics} />
+
+      {/* Charts Grid */}
+      <div className="grid gap-4 lg:grid-cols-3">
+        <RevenueChart data={revenueData} />
+        <ChannelChart data={channelData} />
+        <DeviceChart data={deviceData} />
+      </div>
+
+      {/* Lower Section */}
+      <div className="grid gap-4 lg:grid-cols-4">
+        <div className="lg:col-span-3">
+          <CampaignsTable data={campaignData} />
+        </div>
+        <div className="lg:col-span-1">
+          <ActivityFeed />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function DashboardSkeleton() {
+  return (
+    <div className="space-y-6">
+      <div className="space-y-2">
+        <div className="h-8 bg-muted rounded-lg w-64 animate-pulse" />
+        <div className="h-4 bg-muted rounded w-96 animate-pulse" />
+      </div>
+      
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        {Array.from({ length: 4 }).map((_, i) => (
+          <div key={i} className="p-6 border rounded-lg space-y-3">
+            <div className="h-4 bg-muted rounded w-24 animate-pulse" />
+            <div className="h-8 bg-muted rounded w-32 animate-pulse" />
+            <div className="h-3 bg-muted rounded w-20 animate-pulse" />
+          </div>
+        ))}
+      </div>
+      
+      <div className="grid gap-4 lg:grid-cols-3">
+        {Array.from({ length: 3 }).map((_, i) => (
+          <div key={i} className="p-6 border rounded-lg">
+            <div className="space-y-3 mb-4">
+              <div className="h-6 bg-muted rounded w-32 animate-pulse" />
+              <div className="h-4 bg-muted rounded w-48 animate-pulse" />
+            </div>
+            <div className="h-[350px] bg-muted rounded animate-pulse" />
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
