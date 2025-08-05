@@ -98,8 +98,8 @@ export function CampaignsTable({ data }: CampaignsTableProps) {
     }
   }
 
-  const SortableHeader = ({ field, children }: { field: SortField; children: React.ReactNode }) => (
-    <TableHead>
+  const SortableHeader = ({ field, children, className }: { field: SortField; children: React.ReactNode; className?: string }) => (
+    <TableHead className={className}>
       <Button
         variant="ghost"
         className="h-auto p-0 font-medium hover:bg-transparent"
@@ -118,17 +118,17 @@ export function CampaignsTable({ data }: CampaignsTableProps) {
   return (
     <Card className="col-span-full">
       <CardHeader>
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <CardTitle>Campaign Performance</CardTitle>
-            <CardDescription>Detailed analytics for all marketing campaigns</CardDescription>
+            <CardTitle className="text-lg sm:text-xl">Campaign Performance</CardTitle>
+            <CardDescription className="text-sm">Detailed analytics for all marketing campaigns</CardDescription>
           </div>
-          <div className="flex items-center space-x-2">
-            <Button variant="outline" size="sm">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-2">
+            <Button variant="outline" size="sm" className="w-full sm:w-auto">
               <Filter className="h-4 w-4 mr-2" />
               Filters
             </Button>
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="sm" className="w-full sm:w-auto">
               <Download className="h-4 w-4 mr-2" />
               Export
             </Button>
@@ -147,16 +147,16 @@ export function CampaignsTable({ data }: CampaignsTableProps) {
         </div>
       </CardHeader>
       <CardContent>
-        <div className="rounded-md border">
+        <div className="rounded-md border overflow-x-auto">
           <Table>
             <TableHeader>
               <TableRow>
                 <SortableHeader field="campaign">Campaign</SortableHeader>
                 <SortableHeader field="channel">Channel</SortableHeader>
-                <SortableHeader field="impressions">Impressions</SortableHeader>
+                <SortableHeader field="impressions" className="hidden sm:table-cell">Impressions</SortableHeader>
                 <SortableHeader field="clicks">Clicks</SortableHeader>
-                <SortableHeader field="ctr">CTR</SortableHeader>
-                <SortableHeader field="conversions">Conversions</SortableHeader>
+                <SortableHeader field="ctr" className="hidden md:table-cell">CTR</SortableHeader>
+                <SortableHeader field="conversions" className="hidden sm:table-cell">Conversions</SortableHeader>
                 <SortableHeader field="revenue">Revenue</SortableHeader>
                 <SortableHeader field="status">Status</SortableHeader>
                 <TableHead className="w-[70px]"></TableHead>
@@ -165,13 +165,13 @@ export function CampaignsTable({ data }: CampaignsTableProps) {
             <TableBody>
               {paginatedData.map((campaign) => (
                 <TableRow key={campaign.id} className="hover:bg-muted/50">
-                  <TableCell className="font-medium">{campaign.campaign}</TableCell>
-                  <TableCell>{campaign.channel}</TableCell>
-                  <TableCell>{campaign.impressions.toLocaleString()}</TableCell>
+                  <TableCell className="font-medium min-w-[150px]">{campaign.campaign}</TableCell>
+                  <TableCell className="min-w-[120px]">{campaign.channel}</TableCell>
+                  <TableCell className="hidden sm:table-cell">{campaign.impressions.toLocaleString()}</TableCell>
                   <TableCell>{campaign.clicks.toLocaleString()}</TableCell>
-                  <TableCell>{campaign.ctr.toFixed(2)}%</TableCell>
-                  <TableCell>{campaign.conversions.toLocaleString()}</TableCell>
-                  <TableCell>${campaign.revenue.toLocaleString()}</TableCell>
+                  <TableCell className="hidden md:table-cell">{campaign.ctr.toFixed(2)}%</TableCell>
+                  <TableCell className="hidden sm:table-cell">{campaign.conversions.toLocaleString()}</TableCell>
+                  <TableCell className="font-medium">${campaign.revenue.toLocaleString()}</TableCell>
                   <TableCell>
                     <span className={getStatusBadge(campaign.status)}>
                       {campaign.status}
@@ -219,35 +219,45 @@ export function CampaignsTable({ data }: CampaignsTableProps) {
         </div>
         
         {/* Pagination */}
-        <div className="flex items-center justify-between space-x-2 py-4">
-          <div className="text-sm text-muted-foreground">
+        <div className="flex flex-col sm:flex-row items-center justify-between space-y-2 sm:space-y-0 sm:space-x-2 py-4">
+          <div className="text-xs sm:text-sm text-muted-foreground order-2 sm:order-1">
             Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, sortedData.length)} of {sortedData.length} results
           </div>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-1 sm:space-x-2 order-1 sm:order-2">
             <Button
               variant="outline"
               size="sm"
               onClick={() => setCurrentPage(currentPage - 1)}
               disabled={currentPage === 1}
+              className="px-2 sm:px-3"
             >
               Previous
             </Button>
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-              <Button
-                key={page}
-                variant={currentPage === page ? "default" : "outline"}
-                size="sm"
-                onClick={() => setCurrentPage(page)}
-                className="w-8"
-              >
-                {page}
-              </Button>
-            ))}
+            <div className="hidden sm:flex items-center space-x-1">
+              {Array.from({ length: Math.min(totalPages, 5) }, (_, i) => {
+                const page = i + 1
+                return (
+                  <Button
+                    key={page}
+                    variant={currentPage === page ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setCurrentPage(page)}
+                    className="w-8"
+                  >
+                    {page}
+                  </Button>
+                )
+              })}
+            </div>
+            <div className="sm:hidden text-xs text-muted-foreground px-2">
+              {currentPage} of {totalPages}
+            </div>
             <Button
               variant="outline"
               size="sm"
               onClick={() => setCurrentPage(currentPage + 1)}
               disabled={currentPage === totalPages}
+              className="px-2 sm:px-3"
             >
               Next
             </Button>

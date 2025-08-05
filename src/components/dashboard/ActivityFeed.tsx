@@ -42,26 +42,26 @@ export function ActivityFeed() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="flex items-center space-x-2">
-          <Bell className="h-5 w-5" />
+        <CardTitle className="flex items-center space-x-2 text-lg sm:text-xl">
+          <Bell className="h-4 w-4 sm:h-5 sm:w-5" />
           <span>Real-time Activity</span>
         </CardTitle>
-        <CardDescription>Live updates from your campaigns</CardDescription>
+        <CardDescription className="text-sm">Live updates from your campaigns</CardDescription>
       </CardHeader>
       <CardContent>
-        <ScrollArea className="h-[400px]">
-          <div className="space-y-4">
+        <ScrollArea className="h-[250px] sm:h-[300px]">
+          <div className="space-y-3 sm:space-y-4">
             {activities.map((activity) => {
               const Icon = iconMap[activity.type]
               const colorClass = colorMap[activity.type]
               
               return (
-                <div key={activity.id} className="flex items-start space-x-3 p-3 rounded-lg hover:bg-muted/50 transition-colors">
+                <div key={activity.id} className="flex items-start space-x-2 sm:space-x-3 p-2 sm:p-3 rounded-lg hover:bg-muted/50 transition-colors">
                   <div className={`flex-shrink-0 ${colorClass}`}>
-                    <Icon className="h-4 w-4" />
+                    <Icon className="h-3 w-3 sm:h-4 sm:w-4" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-foreground">
+                    <p className="text-xs sm:text-sm font-medium text-foreground">
                       {activity.action}
                     </p>
                     <p className="text-xs text-muted-foreground mt-1">

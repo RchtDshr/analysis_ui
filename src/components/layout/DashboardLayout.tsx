@@ -71,10 +71,11 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                 <Link
                   key={item.name}
                   to={item.href}
+                  onClick={() => setSidebarOpen(false)}
                   className={`flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                     isActive
-                      ? 'bg-blue-600 text-white dark:bg-blue-500 dark:text-white'
-                      : 'text-muted-foreground hover:text-blue-700 hover:bg-blue-50 dark:hover:text-blue-200 dark:hover:bg-blue-950'
+                      ? 'bg-primary text-primary-foreground'
+                      : 'hover:bg-accent hover:text-accent-foreground'
                   }`}
                 >
                   <Icon className="w-5 h-5" />
@@ -106,8 +107,8 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                 to={item.href}
                 className={`flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                   isActive
-                    ? 'bg-blue-600 text-white dark:bg-blue-500 dark:text-white'
-                    : 'text-muted-foreground hover:text-blue-700 hover:bg-blue-50 dark:hover:text-blue-200 dark:hover:bg-blue-950'
+                    ? 'bg-primary text-primary-foreground'
+                    : 'hover:bg-accent hover:text-accent-foreground'
                 }`}
               >
                 <Icon className="w-5 h-5" />
@@ -123,7 +124,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         {/* Top navigation */}
         <header className="sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
           <div className="flex h-16 items-center justify-between px-6">
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2 sm:space-x-4">
               <Button
                 variant="ghost"
                 size="icon"
@@ -132,18 +133,18 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
               >
                 <Menu className="h-6 w-6" />
               </Button>
-              <div className="relative w-64">
+              <div className="relative w-48 sm:w-64">
                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                 <Input
                   placeholder="Search campaigns, metrics..."
-                  className="pl-10"
+                  className="pl-10 text-sm"
                 />
               </div>
             </div>
             
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2 sm:space-x-4">
               <Button variant="ghost" size="icon" className="relative">
-                <Bell className="h-5 w-5" />
+                <Bell className="h-4 w-4 sm:h-5 sm:w-5" />
                 <span className="absolute -top-1 -right-1 h-3 w-3 bg-destructive rounded-full text-[10px] text-destructive-foreground flex items-center justify-center">
                   3
                 </span>
@@ -154,8 +155,8 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                    <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
-                      <span className="text-sm font-medium">JD</span>
+                    <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center">
+                      <span className="text-xs sm:text-sm font-medium text-primary-foreground">JD</span>
                     </div>
                   </Button>
                 </DropdownMenuTrigger>
@@ -181,7 +182,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         </header>
 
         {/* Page content */}
-        <main className="p-6">
+        <main className="p-4 sm:p-6">
           {children}
         </main>
       </div>
