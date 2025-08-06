@@ -159,8 +159,8 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
               
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                    <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center">
+                  <Button variant="outline" className="relative h-8 w-8 rounded-full">
+                    <div className="h-8 w-8 rounded-full flex items-center justify-center">
                       <span className="text-xs sm:text-sm font-medium text-primary-foreground">JD</span>
                     </div>
                   </Button>
