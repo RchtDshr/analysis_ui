@@ -10,13 +10,20 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  ResponsiveContainer
-} from 'recharts'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import type { ChartData } from '@/data/mockData'
+  ResponsiveContainer,
+  Legend,
+} from "recharts";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import type { ChartData } from "@/data/mockData";
 
 interface RevenueChartProps {
-  data: ChartData[]
+  data: ChartData[];
 }
 
 export function RevenueChart({ data }: RevenueChartProps) {
@@ -24,7 +31,9 @@ export function RevenueChart({ data }: RevenueChartProps) {
     <Card className="col-span-full">
       <CardHeader>
         <CardTitle className="text-lg sm:text-xl">Revenue Trend</CardTitle>
-        <CardDescription className="text-sm">Monthly revenue and user acquisition</CardDescription>
+        <CardDescription className="text-sm">
+          Monthly revenue and user acquisition
+        </CardDescription>
       </CardHeader>
       <CardContent className="pl-2">
         <ResponsiveContainer width="100%" height={300} className="sm:h-[350px]">
@@ -59,15 +68,17 @@ export function RevenueChart({ data }: RevenueChartProps) {
                               className="font-bold text-xs sm:text-sm"
                               style={{ color: entry.color }}
                             >
-                              {entry.name}: {entry.name === 'revenue' ? '$' : ''}{entry.value?.toLocaleString()}
+                              {entry.name}:{" "}
+                              {entry.name === "revenue" ? "$" : ""}
+                              {entry.value?.toLocaleString()}
                             </span>
                           ))}
                         </div>
                       </div>
                     </div>
-                  )
+                  );
                 }
-                return null
+                return null;
               }}
             />
             <Line
@@ -92,19 +103,23 @@ export function RevenueChart({ data }: RevenueChartProps) {
         </ResponsiveContainer>
       </CardContent>
     </Card>
-  )
+  );
 }
 
 interface ChannelChartProps {
-  data: ChartData[]
+  data: ChartData[];
 }
 
 export function ChannelChart({ data }: ChannelChartProps) {
   return (
-    <Card>
+    <Card className="w-full">
       <CardHeader>
-        <CardTitle className="text-lg sm:text-xl">Channel Performance</CardTitle>
-        <CardDescription className="text-sm">Revenue by marketing channel</CardDescription>
+        <CardTitle className="text-lg sm:text-xl">
+          Channel Performance
+        </CardTitle>
+        <CardDescription className="text-sm">
+          Revenue by marketing channel
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <ResponsiveContainer width="100%" height={300} className="sm:h-[350px]">
@@ -127,6 +142,7 @@ export function ChannelChart({ data }: ChannelChartProps) {
               axisLine={false}
             />
             <Tooltip
+              cursor={{ fill: "transparent" }} // removes hover highlight bar
               content={({ active, payload, label }) => {
                 if (active && payload && payload.length) {
                   return (
@@ -135,52 +151,62 @@ export function ChannelChart({ data }: ChannelChartProps) {
                         <span className="text-[0.70rem] uppercase text-muted-foreground">
                           {label}
                         </span>
-                        <span className="font-bold text-xs sm:text-sm" style={{ color: payload[0]?.color }}>
+                        <span className="font-bold text-xs sm:text-sm text-white">
                           Revenue: ${payload[0]?.value?.toLocaleString()}
                         </span>
                       </div>
                     </div>
-                  )
+                  );
                 }
-                return null
+                return null;
               }}
             />
-            <Bar dataKey="value" fill="#007AFF" radius={[8, 8, 0, 0]} />
+            <Bar
+              dataKey="value"
+              fill="#007AFF"
+              radius={[8, 8, 0, 0]}
+              activeBar={false} // <-- disables white glow behind hovered bar
+            />
           </BarChart>
         </ResponsiveContainer>
       </CardContent>
     </Card>
-  )
+  );
 }
 
 interface DeviceChartProps {
-  data: ChartData[]
+  data: ChartData[];
 }
 
-const COLORS = ['#007AFF', '#34C759', '#FF9500']
+const COLORS = ["#007AFF", "#34C759", "#FF9500"];
 
 export function DeviceChart({ data }: DeviceChartProps) {
   return (
-    <Card>
+    <Card className="col-span-full">
       <CardHeader>
         <CardTitle className="text-lg sm:text-xl">Device Usage</CardTitle>
-        <CardDescription className="text-sm">Traffic distribution by device type</CardDescription>
+        <CardDescription className="text-sm">
+          Traffic distribution by device type
+        </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="px-2">
         <ResponsiveContainer width="100%" height={300} className="sm:h-[350px]">
           <PieChart>
             <Pie
               data={data}
               cx="50%"
               cy="50%"
-              labelLine={false}
-              label={({ name, percent }) => `${name} ${((percent || 0) * 100).toFixed(0)}%`}
+              // labelLine={false}
+              // label={({ name, percent }) => `${name} ${((percent || 0) * 100).toFixed(0)}%`}
               outerRadius={80}
               fill="#8884d8"
               dataKey="value"
             >
               {data.map((_, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                <Cell
+                  key={`cell-${index}`}
+                  fill={COLORS[index % COLORS.length]}
+                />
               ))}
             </Pie>
             <Tooltip
@@ -189,19 +215,28 @@ export function DeviceChart({ data }: DeviceChartProps) {
                   return (
                     <div className="rounded-lg border bg-background p-2 shadow-md max-w-xs">
                       <div className="grid grid-cols-1 gap-2">
-                        <span className="font-bold text-xs sm:text-sm" style={{ color: payload[0]?.color }}>
+                        <span
+                          className="font-bold text-xs sm:text-sm"
+                          style={{ color: payload[0]?.color }}
+                        >
                           {payload[0]?.name}: {payload[0]?.value}%
                         </span>
                       </div>
                     </div>
-                  )
+                  );
                 }
-                return null
+                return null;
               }}
+            />
+            <Legend
+              verticalAlign="bottom"
+              height={36}
+              iconType="circle"
+              wrapperStyle={{ paddingTop: "20px" }}
             />
           </PieChart>
         </ResponsiveContainer>
       </CardContent>
     </Card>
-  )
+  );
 }

@@ -59,9 +59,9 @@ export function DashboardOverview() {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
+          <p className="text-2xl sm:text-3xl font-bold tracking-tight">
             Dashboard Overview
-          </h1>
+          </p>
           <p className="text-muted-foreground text-sm sm:text-base">
             Welcome back! Here's what's happening with your campaigns today.
           </p>
@@ -81,13 +81,13 @@ export function DashboardOverview() {
         <div className="md:col-span-2 xl:col-span-2">
           <RevenueChart data={revenueData} />
         </div>
-        <div className="md:col-span-1 xl:col-span-1">
+        <div className="md:col-span-1 xl:col-span-2">
           <ChannelChart data={channelData} />
         </div>
         <div className="md:col-span-1 xl:col-span-1 xl:col-start-3 xl:row-start-1">
           <DeviceChart data={deviceData} />
         </div>
-        <div className="md:col-span-2 xl:col-span-2">
+        <div className="md:col-span-2 xl:col-span-1 xl:col-start-1 xl:row-start-2">
           <ActivityFeed />
         </div>
       </div>

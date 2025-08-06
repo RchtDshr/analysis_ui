@@ -50,7 +50,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         <div className="fixed inset-y-0 left-0 z-40 w-64 bg-card border-r border-border shadow-xl">
           <div className="flex h-16 items-center justify-between px-6 border-b border-border">
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shadow-sm">
+              <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center shadow-sm">
                 <BarChart3 className="w-5 h-5 text-primary-foreground" />
               </div>
               <span className="text-xl font-bold text-foreground">ADmyBRAND</span>
@@ -75,7 +75,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                   onClick={() => setSidebarOpen(false)}
                   className={`group flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
                     isActive
-                      ? 'bg-primary text-primary-foreground shadow-sm'
+                      ? 'bg-background/10 text-primary-foreground shadow-sm'
                       : 'text-muted-foreground hover:text-foreground hover:bg-accent/50'
                   }`}
                 >
@@ -94,7 +94,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
       <div className="hidden lg:fixed lg:inset-y-0 lg:left-0 lg:z-20 lg:w-64 lg:bg-card lg:border-r lg:border-border lg:flex lg:flex-col lg:shadow-sm">
         <div className="flex h-16 items-center px-6 border-b border-border">
           <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shadow-sm">
+            <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center shadow-sm">
               <BarChart3 className="w-5 h-5 text-primary-foreground" />
             </div>
             <span className="text-xl font-bold text-foreground">ADmyBRAND</span>
@@ -110,7 +110,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                 to={item.href}
                 className={`group flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
                   isActive
-                    ? 'bg-primary text-primary-foreground shadow-sm'
+                    ? 'bg-primary/10 text-primary-foreground shadow-sm'
                     : 'text-muted-foreground hover:text-foreground hover:bg-accent/50'
                 }`}
               >

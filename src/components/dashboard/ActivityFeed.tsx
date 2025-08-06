@@ -34,7 +34,7 @@ export function ActivityFeed() {
       }
       
       setActivities(prev => [newActivity, ...prev.slice(0, 9)]) // Keep only 10 most recent
-    }, 30000) // Update every 30 seconds
+    }, 120000) // Update every 2 minutes
 
     return () => clearInterval(interval)
   }, [])
