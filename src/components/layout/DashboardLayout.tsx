@@ -129,13 +129,19 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
     <div className="min-h-screen bg-background">
       {/* Mobile sidebar */}
-      <div className={`fixed inset-0 z-40 lg:hidden ${sidebarOpen ? 'block' : 'hidden'}`}>
+      <div className={`fixed inset-0 z-40 lg:hidden transition-all duration-300 ease-in-out ${
+        sidebarOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+      }`}>
         <div 
-          className="fixed inset-0 bg-black/25 dark:bg-black/50"
+          className={`fixed inset-0 bg-black/25 dark:bg-black/50 transition-opacity duration-300 ease-in-out ${
+            sidebarOpen ? 'opacity-100' : 'opacity-0'
+          }`}
           onClick={() => setSidebarOpen(false)}
         />
-        <div className="fixed inset-y-0 left-0 z-40 w-64 bg-card border-r border-border shadow-xl">
-          <div className="flex h-16 items-center justify-between px-6 border-b border-border">
+        <div className={`fixed inset-y-0 left-0 z-40 w-64 bg-card border-r border-border shadow-xl transform transition-transform duration-300 ease-in-out ${
+          sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}>
+          <div className="flex h-16 items-center justify-between px-4 border-b border-border">
             <div className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center shadow-sm">
                 <BarChart3 className="w-5 h-5 text-black dark:text-primary-foreground" />
