@@ -64,13 +64,6 @@ To add new Shadcn/ui components:
 npx shadcn@latest add <component-name>
 ```
 
-Example:
-```bash
-npx shadcn@latest add dialog
-npx shadcn@latest add badge
-npx shadcn@latest add toast
-```
-
 ### Configuration
 
 Shadcn/ui is configured via `components.json`:
@@ -210,12 +203,6 @@ Currently uses mock data from `src/data/mockData.ts`. To integrate with a real A
 
 - `vite.config.ts` - Vite configuration with React plugin
 
-## 🌐 Browser Support
-
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
 
 ## 📱 Responsive Design
 
@@ -243,50 +230,3 @@ npm i -g vercel
 # Deploy
 vercel
 ```
-
-### Deploy to Netlify
-
-```bash
-# Build the project
-npm run build
-
-# Deploy the dist folder to Netlify
-```
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📝 License
-
-This project is open source and available under the [MIT License](LICENSE).
-
-## 🐛 Troubleshooting
-
-### Common Issues
-
-1. **Port already in use**: Change the port in `vite.config.ts`
-2. **Module not found**: Check import paths and ensure dependencies are installed
-3. **Build errors**: Run `npm run lint` to check for linting errors
-
-### Performance Optimization
-
-- Use React.memo for expensive components
-- Implement virtual scrolling for large lists
-- Optimize chart rendering with data sampling
-- Use lazy loading for route components
-
-## 📞 Support
-
-For support and questions:
-- Create an issue in the repository
-- Check existing issues for solutions
-- Review the documentation
-
----
-
-Built with ❤️ using React and TypeScript
