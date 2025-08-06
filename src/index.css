@@ -4,7 +4,7 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -153,5 +153,39 @@ h1 {
   }
   body {
     @apply bg-background text-foreground;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "liga", "kern";
+    font-optical-sizing: auto;
+  }
+  
+  /* Additional font optimizations for Apple devices */
+  @supports (font: -apple-system-body) {
+    body {
+      font: -apple-system-body;
+    }
+  }
+  
+  /* Crisp text rendering on high-DPI displays */
+  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    body {
+      -webkit-font-smoothing: subpixel-antialiased;
+    }
+  }
+  
+  /* SF Pro Display for headings and large text */
+  h1, h2, h3, h4, h5, h6, .font-display {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-feature-settings: "liga", "kern";
+    font-optical-sizing: auto;
+  }
+  
+  /* Improve button and UI element typography */
+  button, .btn, .button {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-feature-settings: "liga", "kern";
+    font-optical-sizing: auto;
   }
 }
