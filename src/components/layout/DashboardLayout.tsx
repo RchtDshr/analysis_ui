@@ -218,10 +218,10 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
       </div>
 
       {/* Main content */}
-      <div className="lg:pl-64">
+      <div className="lg:pl-64 w-screen lg:w-full">
         {/* Top navigation */}
-        <header className="sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b w-full lg:w-[calc(100vw-18rem)]">
-          <div className="flex h-16 items-center justify-between px-6">
+        <header className="sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b w-screen lg:w-[calc(100vw-18rem)]">
+          <div className="flex h-16 items-center justify-between px-2 md:px-6">
             <div className="flex items-center space-x-2 sm:space-x-4">
               <Button
                 variant="ghost"
