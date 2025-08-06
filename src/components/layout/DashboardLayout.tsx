@@ -47,23 +47,24 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
           className="fixed inset-0 bg-black/25 dark:bg-black/50"
           onClick={() => setSidebarOpen(false)}
         />
-        <div className="fixed inset-y-0 left-0 z-40 w-64 bg-background border-r">
-          <div className="flex h-16 items-center justify-between px-6">
+        <div className="fixed inset-y-0 left-0 z-40 w-64 bg-card border-r border-border shadow-xl">
+          <div className="flex h-16 items-center justify-between px-6 border-b border-border">
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shadow-sm">
                 <BarChart3 className="w-5 h-5 text-primary-foreground" />
               </div>
-              <span className="text-xl font-bold">ADmyBRAND</span>
+              <span className="text-xl font-bold text-foreground">ADmyBRAND</span>
             </div>
             <Button
               variant="ghost"
               size="icon"
               onClick={() => setSidebarOpen(false)}
+              className="hover:bg-accent hover:text-accent-foreground"
             >
               <X className="h-6 w-6" />
             </Button>
           </div>
-          <nav className="px-6 space-y-2">
+          <nav className="px-4 py-6 space-y-1">
             {navigation.map((item) => {
               const Icon = item.icon
               const isActive = location.pathname === item.href
@@ -72,13 +73,15 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                   key={item.name}
                   to={item.href}
                   onClick={() => setSidebarOpen(false)}
-                  className={`flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  className={`group flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
                     isActive
-                      ? 'bg-primary text-primary-foreground'
-                      : 'hover:bg-accent hover:text-accent-foreground'
+                      ? 'bg-primary text-primary-foreground shadow-sm'
+                      : 'text-muted-foreground hover:text-foreground hover:bg-accent/50'
                   }`}
                 >
-                  <Icon className="w-5 h-5" />
+                  <Icon className={`w-5 h-5 transition-transform group-hover:scale-110 ${
+                    isActive ? 'text-primary-foreground' : 'text-muted-foreground group-hover:text-foreground'
+                  }`} />
                   <span>{item.name}</span>
                 </Link>
               )
@@ -88,16 +91,16 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
       </div>
 
       {/* Desktop sidebar */}
-      <div className="hidden lg:fixed lg:inset-y-0 lg:left-0 lg:z-20 lg:w-64 lg:bg-background lg:border-r lg:flex lg:flex-col">
-        <div className="flex h-16 items-center px-6">
+      <div className="hidden lg:fixed lg:inset-y-0 lg:left-0 lg:z-20 lg:w-64 lg:bg-card lg:border-r lg:border-border lg:flex lg:flex-col lg:shadow-sm">
+        <div className="flex h-16 items-center px-6 border-b border-border">
           <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shadow-sm">
               <BarChart3 className="w-5 h-5 text-primary-foreground" />
             </div>
-            <span className="text-xl font-bold">ADmyBRAND</span>
+            <span className="text-xl font-bold text-foreground">ADmyBRAND</span>
           </div>
         </div>
-        <nav className="flex-1 px-6 py-4 space-y-2">
+        <nav className="flex-1 px-4 py-6 space-y-1">
           {navigation.map((item) => {
             const Icon = item.icon
             const isActive = location.pathname === item.href
@@ -105,13 +108,15 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
               <Link
                 key={item.name}
                 to={item.href}
-                className={`flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                className={`group flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
                   isActive
-                    ? 'bg-primary text-primary-foreground'
-                    : 'hover:bg-accent hover:text-accent-foreground'
+                    ? 'bg-primary text-primary-foreground shadow-sm'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-accent/50'
                 }`}
               >
-                <Icon className="w-5 h-5" />
+                <Icon className={`w-5 h-5 transition-transform group-hover:scale-110 ${
+                  isActive ? 'text-primary-foreground' : 'text-muted-foreground group-hover:text-foreground'
+                }`} />
                 <span>{item.name}</span>
               </Link>
             )
@@ -122,7 +127,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
       {/* Main content */}
       <div className="lg:pl-64">
         {/* Top navigation */}
-        <header className="sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
+        <header className="sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b w-full lg:w-[calc(100vw-18rem)]">
           <div className="flex h-16 items-center justify-between px-6">
             <div className="flex items-center space-x-2 sm:space-x-4">
               <Button
@@ -154,8 +159,8 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
               
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="relative h-8 w-8 rounded-full">
-                    <div className="h-8 w-8 rounded-full flex items-center justify-center">
+                  <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                    <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center">
                       <span className="text-xs sm:text-sm font-medium text-primary-foreground">JD</span>
                     </div>
                   </Button>

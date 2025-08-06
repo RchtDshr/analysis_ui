@@ -73,18 +73,20 @@ export function RevenueChart({ data }: RevenueChartProps) {
             <Line
               type="monotone"
               dataKey="revenue"
-              strokeWidth={2}
-              stroke="#8884d8"
-              fill="#8884d8"
+              strokeWidth={3}
+              stroke="#007AFF"
+              fill="#007AFF"
               name="Revenue"
+              dot={{ fill: "#007AFF", strokeWidth: 2, r: 4 }}
             />
             <Line
               type="monotone"
               dataKey="users"
-              strokeWidth={2}
-              stroke="#82ca9d"
-              fill="#82ca9d"
+              strokeWidth={3}
+              stroke="#34C759"
+              fill="#34C759"
               name="Users"
+              dot={{ fill: "#34C759", strokeWidth: 2, r: 4 }}
             />
           </LineChart>
         </ResponsiveContainer>
@@ -143,7 +145,7 @@ export function ChannelChart({ data }: ChannelChartProps) {
                 return null
               }}
             />
-            <Bar dataKey="value" fill="#8884d8" radius={[4, 4, 0, 0]} />
+            <Bar dataKey="value" fill="#007AFF" radius={[8, 8, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </CardContent>
@@ -155,7 +157,7 @@ interface DeviceChartProps {
   data: ChartData[]
 }
 
-const COLORS = ['#8884d8', '#82ca9d', '#ffc658']
+const COLORS = ['#007AFF', '#34C759', '#FF9500']
 
 export function DeviceChart({ data }: DeviceChartProps) {
   return (

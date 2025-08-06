@@ -13,11 +13,11 @@ const iconMap = {
 }
 
 const colorMap = {
-  conversion: 'text-green-500',
-  campaign: 'text-blue-500',
-  alert: 'text-yellow-500',
-  user: 'text-purple-500',
-  revenue: 'text-emerald-500',
+  conversion: 'text-green-600 dark:text-green-400',
+  campaign: 'text-blue-600 dark:text-blue-400',
+  alert: 'text-orange-600 dark:text-orange-400',
+  user: 'text-purple-600 dark:text-purple-400',
+  revenue: 'text-emerald-600 dark:text-emerald-400',
 }
 
 export function ActivityFeed() {
