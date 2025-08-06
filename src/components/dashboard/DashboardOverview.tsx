@@ -74,27 +74,31 @@ export function DashboardOverview() {
       </div>
 
       {/* Key Metrics */}
-      <MetricsGrid metrics={metrics} />
+      <div id="metrics-grid">
+        <MetricsGrid metrics={metrics} />
+      </div>
 
       {/* Charts Grid */}
-      <div className="grid gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
-        <div className="md:col-span-2 xl:col-span-2">
+      <div id="charts-section" className="grid gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+        <div className="md:col-span-2 xl:col-span-2" id="revenue-chart">
           <RevenueChart data={revenueData} />
         </div>
-        <div className="md:col-span-1 xl:col-span-2">
+        <div className="md:col-span-1 xl:col-span-2" id="channel-chart">
           <ChannelChart data={channelData} />
         </div>
-        <div className="md:col-span-1 xl:col-span-1 xl:col-start-3 xl:row-start-1">
+        <div className="md:col-span-1 xl:col-span-1 xl:col-start-3 xl:row-start-1" id="device-chart">
           <DeviceChart data={deviceData} />
         </div>
-        <div className="md:col-span-2 xl:col-span-1 xl:col-start-1 xl:row-start-2">
-          <ActivityFeed />
+        <div className="md:col-span-2 xl:col-span-1 xl:col-start-1 xl:row-start-2" id="activity-feed">
+   
+            <ActivityFeed />
+       
         </div>
       </div>
 
       {/* Lower Section */}
       <div className="grid gap-4 grid-cols-1 xl:grid-cols-4">
-        <div className="xl:col-span-4">
+        <div className="xl:col-span-4" id="campaigns-table">
           <CampaignsTable data={campaignData} />
         </div>
         {/* <div className="xl:col-span-1">

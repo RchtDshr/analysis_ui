@@ -50,7 +50,7 @@ export function ActivityFeed() {
       </CardHeader>
       <CardContent>
         <ScrollArea className="h-[250px] sm:h-[300px]">
-          <div className="space-y-3 sm:space-y-4">
+          <div className="space-y-1">
             {activities.map((activity) => {
               const Icon = iconMap[activity.type]
               const colorClass = colorMap[activity.type]
