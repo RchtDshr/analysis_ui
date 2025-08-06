@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   ChevronDown,
   ChevronUp,
@@ -43,14 +43,29 @@ export function CampaignsTable({ data }: CampaignsTableProps) {
   const [sortField, setSortField] = useState<SortField>('revenue')
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc')
   const [currentPage, setCurrentPage] = useState(1)
+  const [statusFilter, setStatusFilter] = useState<string>('all')
+  const [channelFilter, setChannelFilter] = useState<string>('all')
   const itemsPerPage = 5
 
-  // Filter data based on search term
-  const filteredData = data.filter(
-    (campaign) =>
-      campaign.campaign.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  // Get unique values for filters
+  const uniqueStatuses = Array.from(new Set(data.map(item => item.status)))
+  const uniqueChannels = Array.from(new Set(data.map(item => item.channel)))
+
+  // Reset to first page when search term changes
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [searchTerm])
+
+  // Filter data based on search term and filters
+  const filteredData = data.filter((campaign) => {
+    const matchesSearch = campaign.campaign.toLowerCase().includes(searchTerm.toLowerCase()) ||
       campaign.channel.toLowerCase().includes(searchTerm.toLowerCase())
-  )
+    
+    const matchesStatus = statusFilter === 'all' || campaign.status === statusFilter
+    const matchesChannel = channelFilter === 'all' || campaign.channel === channelFilter
+    
+    return matchesSearch && matchesStatus && matchesChannel
+  })
 
   // Sort data
   const sortedData = [...filteredData].sort((a, b) => {
@@ -82,6 +97,57 @@ export function CampaignsTable({ data }: CampaignsTableProps) {
       setSortField(field)
       setSortDirection('desc')
     }
+  }
+
+  const handleFilterChange = (type: 'status' | 'channel', value: string, event?: React.MouseEvent) => {
+    // Prevent dropdown from closing
+    if (event) {
+      event.preventDefault()
+      event.stopPropagation()
+    }
+    
+    setCurrentPage(1) // Reset to first page when filters change
+    if (type === 'status') {
+      // If clicking the same filter, deselect it
+      setStatusFilter(statusFilter === value ? 'all' : value)
+    } else {
+      // If clicking the same filter, deselect it
+      setChannelFilter(channelFilter === value ? 'all' : value)
+    }
+  }
+
+  const handleExportCSV = () => {
+    const headers = ['Campaign', 'Channel', 'Impressions', 'Clicks', 'CTR', 'Conversions', 'Revenue', 'Status']
+    const csvContent = [
+      headers.join(','),
+      ...filteredData.map(row => [
+        `"${row.campaign}"`,
+        `"${row.channel}"`,
+        row.impressions,
+        row.clicks,
+        row.ctr.toFixed(2),
+        row.conversions,
+        row.revenue,
+        `"${row.status}"`
+      ].join(','))
+    ].join('\n')
+
+    const blob = new Blob([csvContent], { type: 'text/csv' })
+    const url = window.URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+    link.download = `campaigns-${new Date().toISOString().split('T')[0]}.csv`
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+    window.URL.revokeObjectURL(url)
+  }
+
+  const clearFilters = () => {
+    setStatusFilter('all')
+    setChannelFilter('all')
+    setSearchTerm('')
+    setCurrentPage(1)
   }
 
   const getStatusBadge = (status: string) => {
@@ -124,17 +190,81 @@ export function CampaignsTable({ data }: CampaignsTableProps) {
             <CardDescription className="text-sm">Detailed analytics for all marketing campaigns</CardDescription>
           </div>
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-2">
-            <Button variant="outline" size="sm" className="w-full sm:w-auto">
-              <Filter className="h-4 w-4 mr-2" />
-              Filters
-            </Button>
-            <Button variant="outline" size="sm" className="w-full sm:w-auto">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className={`w-full sm:w-auto ${(statusFilter !== 'all' || channelFilter !== 'all') ? 'border-primary text-primary' : ''}`}
+                >
+                  <Filter className="h-4 w-4 mr-2" />
+                  Filters
+                  {(statusFilter !== 'all' || channelFilter !== 'all') && (
+                    <span className="ml-2 bg-primary text-primary-foreground rounded-full px-1.5 py-0.5 text-xs font-medium">
+                      {[statusFilter !== 'all' ? 1 : 0, channelFilter !== 'all' ? 1 : 0].reduce((a, b) => a + b)}
+                    </span>
+                  )}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48 max-h-80 overflow-y-auto">
+                <DropdownMenuLabel>Filter by Status</DropdownMenuLabel>
+                <DropdownMenuItem
+                  onSelect={(e) => e.preventDefault()}
+                  onClick={(e) => handleFilterChange('status', 'all', e)}
+                  className={statusFilter === 'all' ? 'bg-primary/10 text-primary font-medium' : ''}
+                >
+                  All Statuses
+                  {statusFilter === 'all' && <span className="ml-auto">✓</span>}
+                </DropdownMenuItem>
+                {uniqueStatuses.map((status) => (
+                  <DropdownMenuItem
+                    key={status}
+                    onSelect={(e) => e.preventDefault()}
+                    onClick={(e) => handleFilterChange('status', status, e)}
+                    className={statusFilter === status ? 'bg-primary/10 text-primary font-medium' : ''}
+                  >
+                    <span className="capitalize">{status}</span>
+                  </DropdownMenuItem>
+                ))}
+                <DropdownMenuSeparator />
+                <DropdownMenuLabel>Filter by Channel</DropdownMenuLabel>
+                <DropdownMenuItem
+                  onSelect={(e) => e.preventDefault()}
+                  onClick={(e) => handleFilterChange('channel', 'all', e)}
+                  className={channelFilter === 'all' ? 'bg-primary/10 text-primary font-medium' : ''}
+                >
+                  All Channels
+                </DropdownMenuItem>
+                {uniqueChannels.map((channel) => (
+                  <DropdownMenuItem
+                    key={channel}
+                    onSelect={(e) => e.preventDefault()}
+                    onClick={(e) => handleFilterChange('channel', channel, e)}
+                    className={channelFilter === channel ? 'bg-primary/10 text-primary font-medium' : ''}
+                  >
+                    {channel}
+                  </DropdownMenuItem>
+                ))}
+                {(statusFilter !== 'all' || channelFilter !== 'all') && (
+                  <>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem 
+                      onClick={clearFilters}
+                      className="text-destructive hover:text-destructive"
+                    >
+                      Clear All Filters
+                    </DropdownMenuItem>
+                  </>
+                )}
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <Button variant="outline" size="sm" className="w-full sm:w-auto" onClick={handleExportCSV}>
               <Download className="h-4 w-4 mr-2" />
               Export
             </Button>
           </div>
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
           <div className="relative flex-1 max-w-sm">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input
@@ -144,6 +274,21 @@ export function CampaignsTable({ data }: CampaignsTableProps) {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
+          {(searchTerm || statusFilter !== 'all' || channelFilter !== 'all') && (
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <span>
+                {filteredData.length} of {data.length} campaigns
+              </span>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={clearFilters}
+                className="h-8 px-2 text-xs"
+              >
+                Clear all
+              </Button>
+            </div>
+          )}
         </div>
       </CardHeader>
       <CardContent>

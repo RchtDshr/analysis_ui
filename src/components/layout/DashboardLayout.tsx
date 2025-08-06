@@ -51,7 +51,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
           <div className="flex h-16 items-center justify-between px-6 border-b border-border">
             <div className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center shadow-sm">
-                <BarChart3 className="w-5 h-5 text-primary-foreground" />
+                <BarChart3 className="w-5 h-5 text-black dark:text-primary-foreground" />
               </div>
               <span className="text-xl font-bold text-foreground">ADmyBRAND</span>
             </div>
@@ -75,12 +75,12 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                   onClick={() => setSidebarOpen(false)}
                   className={`group flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
                     isActive
-                      ? 'bg-background/10 text-primary-foreground shadow-sm'
+                      ? 'bg-primary/10 dark:text-primary-foreground shadow-sm'
                       : 'text-muted-foreground hover:text-foreground hover:bg-accent/50'
                   }`}
                 >
                   <Icon className={`w-5 h-5 transition-transform group-hover:scale-110 ${
-                    isActive ? 'text-primary-foreground' : 'text-muted-foreground group-hover:text-foreground'
+                    isActive ? 'dark:text-primary-foreground' : 'text-muted-foreground group-hover:text-foreground'
                   }`} />
                   <span>{item.name}</span>
                 </Link>
@@ -95,7 +95,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         <div className="flex h-16 items-center px-6 border-b border-border">
           <div className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center shadow-sm">
-              <BarChart3 className="w-5 h-5 text-primary-foreground" />
+              <BarChart3 className="w-5 h-5 dark:text-primary-foreground" />
             </div>
             <span className="text-xl font-bold text-foreground">ADmyBRAND</span>
           </div>
@@ -110,12 +110,12 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                 to={item.href}
                 className={`group flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
                   isActive
-                    ? 'bg-primary/10 text-primary-foreground shadow-sm'
+                    ? 'bg-primary/10 dark:text-primary-foreground shadow-sm text-black'
                     : 'text-muted-foreground hover:text-foreground hover:bg-accent/50'
                 }`}
               >
                 <Icon className={`w-5 h-5 transition-transform group-hover:scale-110 ${
-                  isActive ? 'text-primary-foreground' : 'text-muted-foreground group-hover:text-foreground'
+                  isActive ? 'text-black dark:text-primary-foreground' : 'text-muted-foreground group-hover:text-foreground'
                 }`} />
                 <span>{item.name}</span>
               </Link>
@@ -161,7 +161,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline" className="relative h-8 w-8 rounded-full">
                     <div className="h-8 w-8 rounded-full flex items-center justify-center">
-                      <span className="text-xs sm:text-sm font-medium text-primary-foreground">JD</span>
+                      <span className="text-xs sm:text-sm font-medium dark:text-primary-foreground">JD</span>
                     </div>
                   </Button>
                 </DropdownMenuTrigger>
