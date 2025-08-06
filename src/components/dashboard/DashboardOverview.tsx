@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
 import { MetricsGrid } from "@/components/dashboard/MetricsGrid";
-import {
-  RevenueChart,
-  ChannelChart,
-  DeviceChart,
-} from "@/components/dashboard/Charts";
+import { RevenueChart } from "@/components/dashboard/charts/RevenueChart";
+import { ChannelChart } from "@/components/dashboard/charts/ChannelChart";
+import { DeviceChart } from "@/components/dashboard/charts/DeviceChart";
 import { CampaignsTable } from "@/components/dashboard/CampaignsTable";
 import { ActivityFeed } from "@/components/dashboard/ActivityFeed";
 import {
